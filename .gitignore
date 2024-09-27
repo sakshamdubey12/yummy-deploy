@@ -1,0 +1,7 @@
+# Ignore node_modules for both backend and frontend
+node_modules/
+yummy/my-app/node_modules/
+yummy/server/node_modules/
+
+# Ignore .env files (make sure to never commit sensitive data)
+.env
