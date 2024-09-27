@@ -13,7 +13,7 @@ const Cuisines = () => {
     const fetchCuisines = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/cuisines/country/${country}`
+          `https://yummy-deploy-1z7n.onrender.com/cuisines/country/${country}`
         );
 
         if (!response.ok) {

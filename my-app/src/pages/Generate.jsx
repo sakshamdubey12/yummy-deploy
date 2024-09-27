@@ -13,7 +13,7 @@ const Generate = () => {
   const handleGenerate = async () => {
     console.log("Selected Ingredients:", selectedOptions);
 
-    const apiUrl = "http://localhost:3001/AI/generate"; // Replace with your API URL
+    const apiUrl = "https://yummy-deploy-1z7n.onrender.com/AI/generate"; // Replace with your API URL
 
     const data = {
       ingredients: selectedOptions,
