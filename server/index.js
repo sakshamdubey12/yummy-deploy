@@ -1,53 +1,9 @@
-// const express = require("express");
-// const isLoggedIn = require('./middleware/auth')
-// const cors = require("cors");
-// const cookieParser = require("cookie-parser");
-// const app = express();
-// require('dotenv').config();
-
-
-// //Middlewares
-// app.use(cors({
-//   origin: "http://localhost:3000",
-//   credentials: true
-// }));
-
-// app.use(cookieParser());
-// app.use(express.json({ limit: '50mb' }));
-
-// //Routes
-// const genrateRoute = require("./routes/generate")
-// app.use('/AI',genrateRoute)
-
-// const authRoutes = require("./routes/auth")
-// app.use('/auth', authRoutes);
-
-// const postRoute= require("./routes/post")
-// app.use('/post',isLoggedIn,postRoute)
-
-// const userRoute= require("./routes/user")
-// app.use('/users',isLoggedIn,userRoute)
-
-// const chatRoute= require("./routes/chat")
-// app.use('/chat',isLoggedIn,chatRoute)
-
-// // app.get('/profile', isLoggedIn, (req, res) => {
-// //   res.status(200).json({ message: 'Profile data', user: req.user });
-// // });
-
-
-// app.listen(3001||process.env.PORT, () => {
-//   console.log("Server running on port 3001");
-// });
-
-
 const express = require("express");
 const isLoggedIn = require('./middleware/auth')
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const http = require("http");
 const Message = require('./models/messageModel')
-// const socketIo = require("socket.io");
 require('dotenv').config();
 require('./utils/db')
 const app = express();
@@ -96,6 +52,10 @@ io.on('connection', (socket) => {
     console.log('User disconnected:', socket.id);
   });
 });
+
+app.get('/',(req,res)=>{
+  res.send('api is working');
+})
 
 // Routes
 const generateRoute = require("./routes/generate");
