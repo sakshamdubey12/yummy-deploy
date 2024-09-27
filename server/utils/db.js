@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // MongoDB connection URI
-const mongoURI = 'mongodb://localhost:27017/yummy'; // Replace with your actual MongoDB URI
+const mongoURI = 'mongodb+srv://sakshamakki06:akki123@cluster0.vwekv.mongodb.net/yummy?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your actual MongoDB URI
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
