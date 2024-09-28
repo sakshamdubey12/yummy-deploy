@@ -16,12 +16,12 @@ var io = require('socket.io')(server, {
 
 // Middlewares
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: "*",
   credentials: true
 }));
-
 app.use(cookieParser());
 app.use(express.json({ limit: '50mb' }));
+app.options('*', cors());
 
 // Socket.IO setup
 io.on('connection', (socket) => {

@@ -58,7 +58,7 @@ const Signup = () => {
 
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Data:', formData);
-      const apiUrl = 'http://localhost:3001/auth/signup'
+      const apiUrl = 'https://yummy-deploy-1z7n.onrender.com/auth/signup'
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {

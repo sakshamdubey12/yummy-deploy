@@ -25,7 +25,7 @@ const AddRecipe = ({ onClose, onPostAdded }) => {
       formData.append("image", image); // Only append if an image is selected
     }
 
-    const apiUrl = "http://localhost:3001/post/addPost";
+    const apiUrl = "https://yummy-deploy-1z7n.onrender.com/post/addPost";
     
     const response =fetch(apiUrl, {
       method: 'POST',

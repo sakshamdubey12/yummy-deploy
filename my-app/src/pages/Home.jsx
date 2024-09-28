@@ -22,7 +22,7 @@
 //   const dispatch = useDispatch();
 //   const isAuthenticated = useSelector((state) => state.search.isLoggedIn);
 //   const fetchUser = async () => {
-//     const response = await fetch("http://localhost:3001/users/user", {
+//     const response = await fetch("https://yummy-deploy-1z7n.onrender.com/users/user", {
 //       method: "GET",
 //       credentials: "include",
 //     });
@@ -47,7 +47,7 @@
 //   // useEffect(() => {
 //   //   const checkAuth = async () => {
 //   //     try {
-//   //       const response = await fetch('http://localhost:3001/auth/', {
+//   //       const response = await fetch('https://yummy-deploy-1z7n.onrender.com/auth/', {
 //   //         method: 'GET',
 //   //         credentials: 'include',
 //   //       });
@@ -73,7 +73,7 @@
 //   // }, [navigate]);
   
 //   const logoutHandler = async () => {
-//     const apiUrl = 'http://localhost:3001/auth/logout';
+//     const apiUrl = 'https://yummy-deploy-1z7n.onrender.com/auth/logout';
 //     const response = await fetch(apiUrl, { method: "GET", credentials: "include" });
 //     if (response.ok) {
 //       setIsLoggedIn(false);
@@ -265,7 +265,7 @@ const Home = () => {
 
   // Fetch user data if authenticated
   const fetchUser = async () => {
-    const response = await fetch("http://localhost:3001/users/user", {
+    const response = await fetch("https://yummy-deploy-1z7n.onrender.com/users/user", {
       method: "GET",
       credentials: "include",
     });
@@ -286,7 +286,7 @@ const Home = () => {
   useEffect(() => {
         const checkAuth = async () => {
           try {
-            const response = await fetch('http://localhost:3001/auth/', {
+            const response = await fetch('https://yummy-deploy-1z7n.onrender.com/auth/', {
               method: 'GET',
               credentials: 'include',
             });
@@ -318,7 +318,7 @@ const Home = () => {
 
   // Logout handler
   const logoutHandler = async () => {
-    const apiUrl = "http://localhost:3001/auth/logout";
+    const apiUrl = "https://yummy-deploy-1z7n.onrender.com/auth/logout";
     const response = await fetch(apiUrl, { method: "GET", credentials: "include" });
     if (response.ok) {
       dispatch(logout({ userId: null, isLoggedIn:false })); // Logout action in Redux

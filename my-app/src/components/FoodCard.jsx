@@ -22,7 +22,7 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
 
   const likeHandle = async () => {
     try {
-      const url = `http://localhost:3001/post/${post._id}/${
+      const url = `https://yummy-deploy-1z7n.onrender.com/post/${post._id}/${
         isLiked ? "unlike" : "like"
       }`;
       const response = await fetch(url, {
@@ -53,7 +53,7 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/post/${post._id}`, {
+      const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/post/${post._id}`, {
         method: "DELETE",
         credentials: "include", // For sending cookies
       });

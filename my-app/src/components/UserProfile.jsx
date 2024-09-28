@@ -16,7 +16,7 @@ const UserProfile = () => {
     const fetchUserDetails = async () => {
       try {
         // Fetch the profile user details
-        const response = await fetch(`http://localhost:3001/users/public/${id}`, {
+        const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/users/public/${id}`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -26,7 +26,7 @@ const UserProfile = () => {
           setUser(data);
           // console.log('s',user)
           // Check if logged-in user is following the profile user
-          const loggedInResponse = await fetch("http://localhost:3001/users/user", {
+          const loggedInResponse = await fetch("https://yummy-deploy-1z7n.onrender.com/users/user", {
             method: "GET",
             credentials: "include",
           });
@@ -55,7 +55,7 @@ const UserProfile = () => {
     try {
       console.log('j')
       const response = await fetch(
-        `http://localhost:3001/users/${id}/follow`,
+        `https://yummy-deploy-1z7n.onrender.com/users/${id}/follow`,
         {
           method: "POST",
           credentials: "include",

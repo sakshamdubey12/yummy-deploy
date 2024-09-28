@@ -15,7 +15,7 @@ const Explore = () => {
       
       try {
         const response = await fetch(
-          `http://localhost:3001/post/followed`, // API for fetching posts from followed users
+          `https://yummy-deploy-1z7n.onrender.com/post/followed`, // API for fetching posts from followed users
           {
             method: 'GET',
             credentials: 'include',
@@ -44,7 +44,7 @@ const Explore = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3001/users/search?q=${searchTerm}`,
+        `https://yummy-deploy-1z7n.onrender.com/users/search?q=${searchTerm}`,
         {
           method: 'GET',
           credentials: 'include',

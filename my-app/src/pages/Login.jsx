@@ -32,7 +32,7 @@ const Login = () => {
   
     if (Object.keys(newErrors).length === 0) {
       try {
-        const apiUrl = 'http://localhost:3001/auth/login';
+        const apiUrl = 'https://yummy-deploy-1z7n.onrender.com/auth/login';
         const response = await fetch(apiUrl, {
           method: "POST",
           headers: {

@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
 
-const socket = io('http://localhost:3001');
+const socket = io('https://yummy-deploy-1z7n.onrender.com');
 
 const Chatbox = () => {
   const [messages, setMessages] = useState([]);
@@ -41,7 +41,7 @@ const Chatbox = () => {
   }, [chatPartner]);
 
   const fetchFollowedUsers = async () => {
-    const response = await fetch(`http://localhost:3001/users/followed?user=${currentUserId}`, {
+    const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/users/followed?user=${currentUserId}`, {
       method: 'GET',
       credentials: 'include',
     });
@@ -66,7 +66,7 @@ const Chatbox = () => {
     }
     
     console.log("Fetching messages for chat:", currentUserId, "with partner:", chatPartner);
-    const response = await fetch(`http://localhost:3001/chat/messages?sender=${currentUserId}&receiver=${chatPartner}`, {
+    const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/chat/messages?sender=${currentUserId}&receiver=${chatPartner}`, {
       method: 'GET',
       credentials: 'include',
     });

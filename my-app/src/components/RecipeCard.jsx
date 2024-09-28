@@ -41,7 +41,7 @@ const RecipeCard = ({ post}) => {
 
   const likeHandle = async () => {
     try {
-      const url = `http://localhost:3001/post/${post._id}/${isLiked ? "unlike" : "like"}`;
+      const url = `https://yummy-deploy-1z7n.onrender.com/post/${post._id}/${isLiked ? "unlike" : "like"}`;
       const response = await fetch(url, {
         method: "PUT",
         credentials: "include",

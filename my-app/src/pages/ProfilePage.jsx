@@ -10,7 +10,7 @@ const ProfilePage = () => {
   // Function to fetch all posts
   const fetchPosts = async () => {
     try {
-      const response = await fetch("http://localhost:3001/post/posts", {
+      const response = await fetch("https://yummy-deploy-1z7n.onrender.com/post/posts", {
         method: "GET",
         credentials: "include",
       });
@@ -24,7 +24,7 @@ const ProfilePage = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch("http://localhost:3001/users/user", {
+      const response = await fetch("https://yummy-deploy-1z7n.onrender.com/users/user", {
         method: "GET",
         credentials: "include",
       });
