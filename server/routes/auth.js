@@ -69,7 +69,9 @@ router.post("/login", async (req, res) => {
     // Clear the token from the cookies
     try {
     const token = req.cookies.token; // Get token from cookies
+    console.log('before',token)
     res.clearCookie('token', { path: '/' });
+    console.log('after',token)
     return res.status(200).json({ message: 'Successfully logged out' });
   } catch (error) {
     console.error('Error logging out:', error);
