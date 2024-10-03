@@ -49,7 +49,7 @@ router.post("/login", async (req, res) => {
           // sameSite: 'Strict', // Adjust as needed
           maxAge: 24 * 60 * 60 * 1000 // Cookie expiration time (1 day)
         });
-        console.log('token: ',res.cookies.token)
+        console.log('token: ',res.cookies)
         res.status(200).json({ message: "Login successful" });
       } else {
         res.status(401).json({ message: "Wrong email or password!" });
