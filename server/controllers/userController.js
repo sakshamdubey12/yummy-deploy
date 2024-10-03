@@ -107,12 +107,6 @@ exports.publicProfile = async(req, res)=>{
   });
 }
 
-exports.userId = (req,res)=>{
-  const userId = req.user.id;
-  console.log(userId)
-  res.status(200).json({userId});
-}
-
 exports.find =async(req, res)=>{
   const id = req.user.id;
   // console.log(id,'hhhhhhhhhhhhhhh')
