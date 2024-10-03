@@ -107,7 +107,7 @@ exports.publicProfile = async(req, res)=>{
   });
 }
 
-exports.userId = async(req,res)={
+exports.userId = (req,res)=>{
   const userId = req.user.id;
   res.status(200).json({userId});
 }
