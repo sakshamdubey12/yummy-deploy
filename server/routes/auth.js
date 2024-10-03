@@ -65,6 +65,11 @@ router.post("/login", async (req, res) => {
     res.status(200).json({ message: 'Profile data', user: req.user, loggedIn });
   });
 
+router.get('/loggedId', (req, res) => {
+    const userId = req.user.id;
+    res.status(200).json({userId: userId});
+  });
+
   router.get('/logout', (req, res) => {
     // Clear the token from the cookies
     try {
