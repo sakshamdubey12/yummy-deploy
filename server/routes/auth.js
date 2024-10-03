@@ -19,7 +19,7 @@ router.post("/signup", async (req, res) => {
       const token = jwt.sign({ id: user._id, email: user.email, name: user.name, userName: user.userName }, secret, { expiresIn: '24h' });
       res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        secure: true, // Use secure cookies in production
         sameSite: 'None', // Adjust as needed
         maxAge: 24 * 60 * 60 * 1000 // Cookie expiration time (1 day)
       });
@@ -68,10 +68,20 @@ router.post("/login", async (req, res) => {
 
   router.get('/logout',isLoggedIn, (req, res) => {
     // Clear the token from the cookies
-    res.clearCookie('token');
-    
-    // Send a response indicating the user has been logged out
+    try {
+    const token = req.cookies.token; // Get token from cookies
+    console.log('before',token)
+    res.clearCookie('token', {
+    httpOnly: true,
+    secure: true, // Must match the secure option used when setting the cookie
+    sameSite: 'None', // Must match the sameSite option used when setting the cookie
+  });
+    console.log('after',token)
     return res.status(200).json({ message: 'Successfully logged out' });
+  } catch (error) {
+    console.error('Error logging out:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
   });
 
   module.exports = router;
