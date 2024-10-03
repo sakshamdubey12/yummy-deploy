@@ -107,6 +107,11 @@ exports.publicProfile = async(req, res)=>{
   });
 }
 
+exports.id = async(req,res)={
+  const id = req.user.id;
+  res.status(200).json(id);
+}
+
 exports.find =async(req, res)=>{
   const id = req.user.id;
   // console.log(id,'hhhhhhhhhhhhhhh')
@@ -118,7 +123,6 @@ exports.find =async(req, res)=>{
 
 exports.follwedUsers = async (req, res) => {
   const currentUserId = req.user.id; // Get user ID from query parameter
-
   try {
     // Find the user by ID
     const user = await userModel.findById(currentUserId);
@@ -131,7 +135,7 @@ exports.follwedUsers = async (req, res) => {
     const followedUsers = await userModel.find({ _id: { $in: user.following } }); // Assuming 'following' is an array of user IDs
 
     // Send back the list of followed users
-    res.status(200).json({followedUsers,id: req.user.id});
+    res.status(200).json(followedUsers);
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
