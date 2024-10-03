@@ -67,6 +67,7 @@ router.post("/login", async (req, res) => {
 
 router.get('/loggedId', (req, res) => {
     const userId = req.user.id;
+    console.log(userId);
     res.status(200).json({userId: userId});
   });
 
