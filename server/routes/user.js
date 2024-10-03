@@ -8,5 +8,6 @@ router.get("/user", userController.getUserProfile);
 router.get("/:id",userController.find);
 router.get("/public/:id",userController.publicProfile);
 router.get('/followed', userController.follwedUsers );
+router.get('/id', userController.id );
 
 module.exports = router;
