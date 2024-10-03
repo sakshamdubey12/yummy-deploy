@@ -117,7 +117,7 @@ exports.find =async(req, res)=>{
 }
 
 exports.follwedUsers = async (req, res) => {
-  const currentUserId = req.query.user; // Get user ID from query parameter
+  const currentUserId = req.user.id; // Get user ID from query parameter
 
   try {
     // Find the user by ID
@@ -131,7 +131,7 @@ exports.follwedUsers = async (req, res) => {
     const followedUsers = await userModel.find({ _id: { $in: user.following } }); // Assuming 'following' is an array of user IDs
 
     // Send back the list of followed users
-    res.status(200).json(followedUsers);
+    res.status(200).json({followedUsers,id: req.user.id});
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
