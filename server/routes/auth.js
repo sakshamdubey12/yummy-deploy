@@ -65,7 +65,7 @@ router.post("/login", async (req, res) => {
     res.status(200).json({ message: 'Profile data', user: req.user, loggedIn });
   });
 
-router.get('/loggedId', (req, res) => {
+router.get('/loggedId',isLoggedIn, (req, res) => {
     const userId = req.user.id;
     console.log(userId);
     res.status(200).json({userId: userId});
