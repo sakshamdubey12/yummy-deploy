@@ -8,12 +8,13 @@ const Cuisines = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-
+  const apiBase = process.env.REACT_APP_API_URL;
+  
   useEffect(() => {
     const fetchCuisines = async () => {
       try {
         const response = await fetch(
-          `https://yummy-deploy-1z7n.onrender.com/cuisines/country/${country}`
+          `${apiBase}/cuisines/country/${country}`
         );
 
         if (!response.ok) {

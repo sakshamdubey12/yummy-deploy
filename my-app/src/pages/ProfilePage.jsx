@@ -6,17 +6,19 @@ const ProfilePage = () => {
   const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState('')
+  const apiBase = process.env.REACT_APP_API_URL;
+
 
   // Function to fetch all posts
   const fetchPosts = async () => {
     try {
-      const response = await fetch("https://yummy-deploy-1z7n.onrender.com/post/posts", {
+      const response = await fetch(`${apiBase}/post/posts`, {
         method: "GET",
         credentials: "include",
       });
       const data = await response.json();
       setPosts(data);  // Update posts in state
-      // console.log('posts',posts)
+      console.log('posts',posts)
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
@@ -24,7 +26,7 @@ const ProfilePage = () => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch("https://yummy-deploy-1z7n.onrender.com/users/user", {
+      const response = await fetch(`${apiBase}/users/user`, {
         method: "GET",
         credentials: "include",
       });
@@ -126,7 +128,7 @@ const ProfilePage = () => {
             <p>No posts available</p>
           ) : (
             <div className="grid grid-cols-5 gap-8 h-[50%]">
-              {posts.map((post) => (
+              {posts?.map((post) => (
                 <FoodCard key={post._id} post={post} loggedInUser={user} user={user} onDelete={handleDeletePost} onUpdate={handleUpdate} />
               ))}
             </div>
@@ -138,5 +140,12 @@ const ProfilePage = () => {
     </div>
   );
 };
+
+// const ProfilePage = ()=>{
+//   return 
+//   <div>
+//     Profile
+//   </div>
+// }
 
 export default ProfilePage;

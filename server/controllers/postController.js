@@ -164,7 +164,7 @@ exports.followedPost = async (req, res) => {
           : null,  // Check if image exists
       }));
 
-    console.log(postsWithBase64Images)
+    // console.log(postsWithBase64Images)
     return res.json(postsWithBase64Images);
   } catch (error) {
     console.error('Error fetching posts from followed users:', error);

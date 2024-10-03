@@ -5,16 +5,21 @@ import { io } from 'socket.io-client';
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
 import msg from "../images/msg.gif"
-const socket = io('https://yummy-deploy-1z7n.onrender.com');
+const apiBase = process.env.REACT_APP_API_URL;
+const socket = io(`${apiBase}`);
+// const socket = io('http://localhost:3001');
+
 export const Chat = () => {
+    const apiBase = process.env.REACT_APP_API_URL;
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [followedUsers, setFollowedUsers] = useState([]);
     const [chatPartner, setChatPartner] = useState(null);
-    const currentUserId = useSelector((state) => state.user.userId);
+    const [currentUserId, setCurrentUserId] = useState(null) 
     
     useEffect(() => {
+      fetchId();
       fetchFollowedUsers();
       if (currentUserId) {
         socket.emit('joinRoom', currentUserId);
@@ -28,7 +33,7 @@ export const Chat = () => {
           setMessages((prevMessages) => [...prevMessages, message]);
         }
       });
-  
+      
       return () => {
         socket.off('receiveMessage');
       };
@@ -42,7 +47,7 @@ export const Chat = () => {
     }, [chatPartner]);
   
     const fetchFollowedUsers = async () => {
-      const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/users/followed?user=${currentUserId}`, {
+      const response = await fetch(`${apiBase}/users/followed?user=${currentUserId}`, {
         method: 'GET',
         credentials: 'include',
       });
@@ -51,7 +56,19 @@ export const Chat = () => {
         setFollowedUsers(data);
       }
     };
-  
+
+    const fetchId = async ()=>{
+      const response = await fetch(`${apiBase}/auth/loggedId`, {
+        method: 'GET',
+        credentials: 'include',
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setCurrentUserId(data.userId);
+        console.log('id: ',data)
+      }
+    }
+
     const handleMessageUser = async (userId) => {
       setChatPartner(userId);
       fetchMessages();
@@ -66,7 +83,7 @@ export const Chat = () => {
       }
       
       console.log("Fetching messages for chat:", currentUserId, "with partner:", chatPartner);
-      const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/chat/messages?sender=${currentUserId}&receiver=${chatPartner}`, {
+      const response = await fetch(`${apiBase}/chat/messages?sender=${currentUserId}&receiver=${chatPartner}`, {
         method: 'GET',
         credentials: 'include',
       });

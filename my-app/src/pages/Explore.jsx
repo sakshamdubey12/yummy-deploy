@@ -5,6 +5,7 @@ import Chatbox from '../components/Chatbox';
 
 const Explore = () => {
   const navigate = useNavigate();
+  const apiBase = process.env.REACT_APP_API_URL;
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,7 +16,7 @@ const Explore = () => {
       
       try {
         const response = await fetch(
-          `https://yummy-deploy-1z7n.onrender.com/post/followed`, // API for fetching posts from followed users
+          `${apiBase}/post/followed`, // API for fetching posts from followed users
           {
             method: 'GET',
             credentials: 'include',
@@ -44,7 +45,7 @@ const Explore = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch(
-        `https://yummy-deploy-1z7n.onrender.com/users/search?q=${searchTerm}`,
+        `${apiBase}/users/search?q=${searchTerm}`,
         {
           method: 'GET',
           credentials: 'include',

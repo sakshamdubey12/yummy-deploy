@@ -9,14 +9,14 @@ const UserProfile = () => {
   const [user, setUser] = useState(null); // Profile user data
   const [loading, setLoading] = useState(true); // Loading state
   const [loggedInUser, setLoggedInUser] = useState(null); // Current logged-in user
-
+  const apiBase = process.env.REACT_APP_API_URL;
   // Fetch profile user details and follow status
   useEffect(() => {
     
     const fetchUserDetails = async () => {
       try {
         // Fetch the profile user details
-        const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/users/public/${id}`, {
+        const response = await fetch(`${apiBase}/users/public/${id}`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -26,7 +26,7 @@ const UserProfile = () => {
           setUser(data);
           // console.log('s',user)
           // Check if logged-in user is following the profile user
-          const loggedInResponse = await fetch("https://yummy-deploy-1z7n.onrender.com/users/user", {
+          const loggedInResponse = await fetch(`${apiBase}/users/user`, {
             method: "GET",
             credentials: "include",
           });
@@ -53,9 +53,9 @@ const UserProfile = () => {
   // Handle follow/unfollow logic
   const handleFollow = async () => {
     try {
-      console.log('j')
+      // console.log('j')
       const response = await fetch(
-        `https://yummy-deploy-1z7n.onrender.com/users/${id}/follow`,
+        `${apiBase}/users/${id}/follow`,
         {
           method: "POST",
           credentials: "include",

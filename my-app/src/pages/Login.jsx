@@ -4,9 +4,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { login, logout } from '../redux/userSlice';
 
 const Login = () => {
-  const dispatch = useDispatch();
-  // const isAuthenticated = useSelector((state) => state.user.isLoggedIn);
-  // console.log(isAuthenticated)
+  const apiBase = process.env.REACT_APP_API_URL;
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -14,7 +12,7 @@ const Login = () => {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  console.log()
+
   // Handle input changes
   const handleChange = (e) => {
     setFormData({
@@ -32,8 +30,8 @@ const Login = () => {
   
     if (Object.keys(newErrors).length === 0) {
       try {
-        const apiUrl = 'https://yummy-deploy-1z7n.onrender.com/auth/login';
-        const response = await fetch(apiUrl, {
+        const apiUrl = `${apiBase}/auth/login`;
+        const response = await fetch(apiUrl, {          
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -45,9 +43,7 @@ const Login = () => {
         const data = await response.json();
         
         if (response.ok) {
-          dispatch(login({ isLoggedIn: true }));
-          // console.log(useSelector((state) => state.user.isLoggedIn))
-          navigate('/');
+          navigate('/profile');
         } else {
           // Display error returned from backend
           setErrors({ general: data.message });

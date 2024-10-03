@@ -13,8 +13,8 @@ import avatar4 from "../images/avatars/avatar4.png";
 const Signup = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
-  console.log("log", isLoggedIn)
-
+  // console.log("log", isLoggedIn)
+  const apiBase = process.env.REACT_APP_API_URL;
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -58,7 +58,7 @@ const Signup = () => {
 
     if (Object.keys(newErrors).length === 0) {
       console.log('Form Data:', formData);
-      const apiUrl = 'https://yummy-deploy-1z7n.onrender.com/auth/signup'
+      const apiUrl = `${apiBase}/auth/signup`
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {

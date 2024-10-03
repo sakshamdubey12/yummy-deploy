@@ -52,6 +52,7 @@ import { useNavigate } from 'react-router-dom';
 import worldMap from '../../src/world.geojson';
 
 const WorldMap = () => {
+    const apiBase = process.env.REACT_APP_API_URL;
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const navigate = useNavigate();
 

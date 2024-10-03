@@ -11,7 +11,7 @@ const RecipeCard = ({ post}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [nutritionData, setNutritionData] = useState(null); // State to store nutrition data
   const [loading, setLoading] = useState(false); // Loading state
-
+  const apiBase = process.env.REACT_APP_API_URL;
   const formatPostDate = (createdAt) => {
     const postDate = new Date(createdAt);
     const currentDate = new Date();
@@ -41,7 +41,7 @@ const RecipeCard = ({ post}) => {
 
   const likeHandle = async () => {
     try {
-      const url = `https://yummy-deploy-1z7n.onrender.com/post/${post._id}/${isLiked ? "unlike" : "like"}`;
+      const url = `${apiBase}/post/${post._id}/${isLiked ? "unlike" : "like"}`;
       const response = await fetch(url, {
         method: "PUT",
         credentials: "include",

@@ -46,10 +46,10 @@ router.post("/login", async (req, res) => {
         res.cookie('token', token, {
           httpOnly: true,
           // secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-          sameSite: 'Strict', // Adjust as needed
+          // sameSite: 'None', // Adjust as needed
           maxAge: 24 * 60 * 60 * 1000 // Cookie expiration time (1 day)
         });
-        // console.log(res.cookie.token)
+        console.log('cookie: ',req.cookies.token)
         res.status(200).json({ message: "Login successful" });
       } else {
         res.status(401).json({ message: "Wrong email or password!" });
@@ -60,12 +60,13 @@ router.post("/login", async (req, res) => {
     }
   });
 
-  router.get('/', isLoggedIn, (req, res) => {
+  router.get('/', isLoggedIn,(req, res) => {
     const loggedIn = req.isAuthenticated;
+  console.log(loggedIn)
     res.status(200).json({ message: 'Profile data', user: req.user, loggedIn });
   });
 
-  router.get('/logout', (req, res) => {
+  router.get('/logout',isLoggedIn, (req, res) => {
     // Clear the token from the cookies
     res.clearCookie('token');
     

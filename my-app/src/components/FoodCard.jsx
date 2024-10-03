@@ -5,24 +5,24 @@ import { FiHeart } from "react-icons/fi";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useEffect, useRef } from "react";
-
+import { useSelector } from "react-redux";
 const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [isLiked, setIsLiked] = useState(post.isLiked)
-  const currentUserId = user._id;
-  
+  const apiBase = process.env.REACT_APP_API_URL;
+  // const currentUserId = user._id;
+  const currentUserId = useSelector((state) => state.user.userId);
   useEffect(() => {
     // Check if the post is liked by the current user when the component mounts
-    if (post.likes.includes(loggedInUser.id)) {
-      console.log(post.likes,currentUserId)
+    if (post.likes.includes(currentUserId)) {
       setIsLiked(true);
     }
   }, [post.likes, currentUserId]);
 
   const likeHandle = async () => {
     try {
-      const url = `https://yummy-deploy-1z7n.onrender.com/post/${post._id}/${
+      const url = `${apiBase}/post/${post._id}/${
         isLiked ? "unlike" : "like"
       }`;
       const response = await fetch(url, {
@@ -53,7 +53,7 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`https://yummy-deploy-1z7n.onrender.com/post/${post._id}`, {
+      const response = await fetch(`${apiBase}/post/${post._id}`, {
         method: "DELETE",
         credentials: "include", // For sending cookies
       });

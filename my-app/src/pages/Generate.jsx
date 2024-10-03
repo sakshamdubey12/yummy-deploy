@@ -9,11 +9,11 @@ const Generate = () => {
   const selectedOptions = useSelector((state) => state.search.selectedOptions);
   const [predictedRecipe, setPredictedRecipe] = useState(null); // State to store the predicted recipe
   const [loading, setLoading] = useState(false); // State for loader
-
+  const apiBase = process.env.REACT_APP_API_URL;
   const handleGenerate = async () => {
     console.log("Selected Ingredients:", selectedOptions);
 
-    const apiUrl = "https://yummy-deploy-1z7n.onrender.com/AI/generate"; // Replace with your API URL
+    const apiUrl = `${apiBase}/AI/generate`; // Replace with your API URL
 
     const data = {
       ingredients: selectedOptions,

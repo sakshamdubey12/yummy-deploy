@@ -16,7 +16,7 @@ var io = require('socket.io')(server, {
 
 // Middlewares
 app.use(cors({
-  origin: "*",
+  origin: "http://localhost:3000",
   credentials: true
 }));
 app.use(cookieParser());
@@ -65,10 +65,10 @@ const authRoutes = require("./routes/auth");
 app.use('/auth', authRoutes);
 
 const postRoute = require("./routes/post");
-app.use('/post', isLoggedIn, postRoute);
+app.use('/post',isLoggedIn, postRoute);
 
 const userRoute = require("./routes/user");
-app.use('/users', isLoggedIn, userRoute);
+app.use('/users',isLoggedIn, userRoute);
 
 const cuisinesModel = require("./models/cuisinesModel")
 app.get("/cuisines/country/:country",async(req,res)=>{
@@ -79,12 +79,12 @@ app.get("/cuisines/country/:country",async(req,res)=>{
   }else{
 
     res.json(data[0].cuisines)
-    console.log(data[0].cuisines)
+    // console.log(data[0].cuisines)
   }
 })
 
 const chatRoute = require("./routes/chat");
-app.use('/chat', isLoggedIn, chatRoute);
+app.use('/chat',isLoggedIn, chatRoute);
 
 // Example profile route (optional)
 // app.get('/profile', isLoggedIn, (req, res) => {

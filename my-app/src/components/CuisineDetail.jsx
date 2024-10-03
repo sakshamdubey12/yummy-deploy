@@ -4,7 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 const CuisineDetail = () => {
   const { cuisine } = useParams();
   const location = useLocation();
-  
+  const apiBase = process.env.REACT_APP_API_URL;
   // Access the description from the passed state
   const { description } = location.state || {};  // Fallback to undefined if no state is passed
 

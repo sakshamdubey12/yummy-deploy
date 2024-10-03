@@ -3,7 +3,7 @@ const secret = "shhh";
 
 const isLoggedIn = (req, res, next) => {
   const token = req.cookies.token;
-  console.log(token)
+  console.log("token set: ",token)
   req.isAuthenticated = false;
 
   if (!token) return res.status(401).json({ message: 'Not authenticated' });

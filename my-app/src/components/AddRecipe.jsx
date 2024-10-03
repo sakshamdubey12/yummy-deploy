@@ -9,7 +9,7 @@ const AddRecipe = ({ onClose, onPostAdded }) => {
   const [hashtags, setHashtags] = useState("");
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null); 
-
+  const apiBase = process.env.REACT_APP_API_URL;
   // Suitable units for the ingredients
   const units = ["g", "kg", "lb", "oz", "ml", "l", "tsp", "tbsp", "cups", "fl oz", "pints", "quarts", "gallons", "pieces", "slices", "units"];
 
@@ -25,7 +25,7 @@ const AddRecipe = ({ onClose, onPostAdded }) => {
       formData.append("image", image); // Only append if an image is selected
     }
 
-    const apiUrl = "https://yummy-deploy-1z7n.onrender.com/post/addPost";
+    const apiUrl = `${apiBase}/post/addPost`;
     
     const response =fetch(apiUrl, {
       method: 'POST',

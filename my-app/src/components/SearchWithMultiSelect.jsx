@@ -6,7 +6,7 @@ const SearchWithMultiSelect = () => {
   const dispatch = useDispatch();
   const searchTerm = useSelector((state) => state.search.searchTerm);
   const selectedOptions = useSelector((state) => state.search.selectedOptions);
-
+  const apiBase = process.env.REACT_APP_API_URL;
   const options = [
     "Chicken",
     "Butter",
