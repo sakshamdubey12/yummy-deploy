@@ -58,13 +58,13 @@ export const Chat = () => {
     };
 
     const fetchId = async ()=>{
-      const response = await fetch(`${apiBase}/auth/loggedId`, {
+      const response = await fetch(`${apiBase}/auth/`, {
         method: 'GET',
         credentials: 'include',
       });
       if (response.ok) {
         const data = await response.json();
-        setCurrentUserId(data.userId);
+        setCurrentUserId(data.user.id);
         console.log('id: ',data)
       }
     }
