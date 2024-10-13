@@ -45,8 +45,8 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign({ id: user._id, email: user.email, name: user.name, userName: user.userName }, secret, { expiresIn: '24h' });
         res.cookie('token', token, {
           httpOnly: true,
-          // secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-          // sameSite: 'None', // Adjust as needed
+          secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+          sameSite: 'None', // Adjust as needed
           maxAge: 24 * 60 * 60 * 1000 // Cookie expiration time (1 day)
         });
         console.log('cookie: ',req.cookies.token)
