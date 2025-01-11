@@ -5,8 +5,7 @@ const CuisineDetail = () => {
   const { cuisine } = useParams();
   const location = useLocation();
   const apiBase = process.env.REACT_APP_API_URL;
-  // Access the description from the passed state
-  const { description } = location.state || {};  // Fallback to undefined if no state is passed
+  const { description } = location.state || {}; 
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-lg">

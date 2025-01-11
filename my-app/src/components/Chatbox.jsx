@@ -12,9 +12,10 @@ const Chatbox = () => {
   const [followedUsers, setFollowedUsers] = useState([]);
   const [chatPartner, setChatPartner] = useState(null);
   const [currentUserId,setCurrentUserId] = useState(null)
-  // const apiBase = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     fetchId()
+    
     fetchFollowedUsers();
     if (currentUserId) {
       socket.emit('joinRoom',currentUserId);
@@ -32,14 +33,14 @@ const Chatbox = () => {
     return () => {
       socket.off('receiveMessage');
     };
-  }, [currentUserId, chatPartner]);
+  }, [ chatPartner]);
   
   useEffect(() => {
     if (chatPartner) {
-      setMessages([]);  // Clear previous messages when a new chat starts
+      setMessages([]); 
       fetchMessages();
     }
-  }, [chatPartner]);
+  }, [currentUserId,chatPartner]);
 
   const fetchFollowedUsers = async () => {
     const response = await fetch(`${apiBase}/users/followed?user=${currentUserId}`, {
@@ -48,18 +49,21 @@ const Chatbox = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      // console.log(data)
       setFollowedUsers(data);
     }
   };
+
+
   const fetchId = async ()=>{
-    const response = await fetch(`${apiBase}/auth/loggedId`, {
+    const response = await fetch(`${apiBase}/auth/`, {
       method: 'GET',
       credentials: 'include',
     });
+    console.log(response)
+
     if (response.ok) {
       const data = await response.json();
-      setCurrentUserId(data.userId);
+      setCurrentUserId(data.user.id);
       console.log('id: ',data)
     }
   }

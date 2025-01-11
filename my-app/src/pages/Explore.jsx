@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import Chatbox from '../components/Chatbox';
 
-const Explore = () => {
+const Explore = ({loggedInUserId}) => {
   const navigate = useNavigate();
   const apiBase = process.env.REACT_APP_API_URL;
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,19 +11,17 @@ const Explore = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    // Fetch posts from users being followed when component mounts
     const fetchFollowedPosts = async () => {
       
       try {
         const response = await fetch(
-          `${apiBase}/post/followed`, // API for fetching posts from followed users
+          `${apiBase}/post/followed`, 
           {
             method: 'GET',
             credentials: 'include',
           }
         );
         if (response.ok) {
-          // console.log(response)
           const followedPosts = await response.json();
           setPosts(followedPosts);
           
@@ -55,7 +53,7 @@ const Explore = () => {
       if (response.ok) {
         const results = await response.json();
         setSearchResults(results);
-        setShowDropdown(true); // Show the dropdown when search results are available
+        setShowDropdown(true);
       } else {
         console.error('Failed to search users');
       }
@@ -67,7 +65,7 @@ const Explore = () => {
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
     if (e.target.value === '') {
-      setShowDropdown(false); // Hide dropdown if input is cleared
+      setShowDropdown(false); 
     }
   };
 
@@ -152,7 +150,7 @@ const Explore = () => {
                   <li
                     key={user._id}
                     className="p-2 border-b hover:bg-gray-100 cursor-pointer"
-                    onClick={() => setShowDropdown(false)} // Optionally hide dropdown on click
+                    onClick={() => setShowDropdown(false)}
                   >
                     <div className="flex justify-between">
                       <div className="ml-3 flex items-center">
@@ -186,7 +184,7 @@ const Explore = () => {
         <div>
           {posts.length > 0 ? (
             posts.map((post) => (
-              <RecipeCard post={post} />
+              <RecipeCard loggedInUserId={loggedInUserId} post={post} />
             ))
           ) : (
             <p className="text-gray-600">No posts available from followed users.</p>

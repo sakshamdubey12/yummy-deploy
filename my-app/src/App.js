@@ -1,17 +1,4 @@
-// import React from "react";
-// import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-// import Home from "./pages/Home";
-// function App() {
-//   return (
-//     <div>
-//         <Router>
-//           <Home/>
-//         </Router>
-//     </div>
-//   );
-// }
 
-// export default App;
 
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, NavLink, Route, Routes, useNavigate } from "react-router-dom";
@@ -25,15 +12,14 @@ import UserProfile from "./components/UserProfile";
 import WorldMap from "./pages/WorldMap";
 import Cuisines from "./pages/Cuisines";
 import CuisineDetail from "./components/CuisineDetail";
-// import { useDispatch } from "react-redux";
-// import { logout } from "../redux/userSlice";
 import { Chat } from "./pages/Chat";
 
 const App = () => {
   const apiBase = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track authentication status
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [loggedInUserId, setLoggedInUserId] = useState(null)
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -42,7 +28,7 @@ const App = () => {
           credentials: "include",
         });
         const data = await response.json();
-        console.log(data)
+        setLoggedInUserId(data.user.id)
         
         if (response.ok && data.loggedIn) {
           setIsLoggedIn(true);
@@ -53,7 +39,6 @@ const App = () => {
           setIsLoggedIn(false);
           const currentPath = window.location.pathname;
 
-          // Redirect if user is not authenticated and not on login/signup routes
           if (!["/login", "/signup"].includes(currentPath)) {
             navigate("/login");
           }
@@ -67,7 +52,6 @@ const App = () => {
     checkAuth();
   }, [navigate]);
 
-  // Logout handler
   const logoutHandler = async () => {
     const apiUrl = `${apiBase}/auth/logout`;
     const response = await fetch(apiUrl, {
@@ -75,8 +59,8 @@ const App = () => {
       credentials: "include",
     });
     if (response.ok) {
-      setIsLoggedIn(false); // Set login state to false
-      navigate("/"); // Redirect to login
+      setIsLoggedIn(false); 
+      navigate("/"); 
     }
   };
 
@@ -190,8 +174,8 @@ const App = () => {
         ) : (
           <div className="relative w-64 bg-purple-700 text-white flex flex-col justify-center">
             <img
-              className="absolute -left-[-3.8%]" // Adjust positioning
-              style={{ top: "20%", transform: "scale(1.3)" }} // Adjust scale and position
+              className="absolute -left-[-3.8%]" 
+              style={{ top: "20%", transform: "scale(1.3)" }} 
               src={chef}
               alt="Chef"
             />
@@ -202,13 +186,13 @@ const App = () => {
         <div className="flex-1 p-6">
           <Routes>
             <Route path="/" element={isLoggedIn ? <ProfilePage /> : <Login />} />
-            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile" element={<ProfilePage  />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/explore" element={<Explore />} />
+            <Route path="/explore" element={<Explore loggedInUserId={loggedInUserId} />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/users/:id" element={<UserProfile />} />
+            <Route path="/users/:id" element={<UserProfile loggedInUserId={loggedInUserId} />} />
             <Route path="/WorldMap" element={<WorldMap />} />
             <Route path="/cuisines/:country" element={<Cuisines />} />
             <Route path="/cuisine/:cuisine" element={<CuisineDetail />} />

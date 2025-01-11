@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { login, logout } from '../redux/userSlice';
@@ -13,7 +13,25 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // Handle input changes
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${apiBase}/auth/`, {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        console.log('hh',data, response)
+        if(response.ok && data.loggedIn){
+            navigate('/profile')
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -37,15 +55,15 @@ const Login = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-          credentials: 'include',  // This includes cookies in the request
+          credentials: 'include',  
         });
         
         const data = await response.json();
+        console.log('login',data)
         
         if (response.ok) {
           navigate('/profile');
         } else {
-          // Display error returned from backend
           setErrors({ general: data.message });
         }
       } catch (error) {
@@ -80,7 +98,6 @@ const Login = () => {
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          {/* Password Input */}
           <div className="mb-6">
             <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
               Password
@@ -98,7 +115,6 @@ const Login = () => {
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-purple-700 text-white py-2 rounded-lg hover:bg-purple-800 transition duration-300"
@@ -107,7 +123,6 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Signup Link */}
         <p className="text-center text-gray-600 mt-4">
           Don’t have an account?{' '}
           <a href="/signup" className="text-purple-700 hover:underline">
@@ -115,7 +130,6 @@ const Login = () => {
           </a>
         </p>
 
-        {/* Forgot Password Link */}
         <p className="text-center text-gray-600 mt-2">
           <a href="/forgot-password" className="text-purple-700 hover:underline">
             Forgot Password?

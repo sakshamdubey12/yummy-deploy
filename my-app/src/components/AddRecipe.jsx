@@ -10,7 +10,6 @@ const AddRecipe = ({ onClose, onPostAdded }) => {
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null); 
   const apiBase = process.env.REACT_APP_API_URL;
-  // Suitable units for the ingredients
   const units = ["g", "kg", "lb", "oz", "ml", "l", "tsp", "tbsp", "cups", "fl oz", "pints", "quarts", "gallons", "pieces", "slices", "units"];
 
   const handleSubmit = (e) => {
@@ -18,11 +17,11 @@ const AddRecipe = ({ onClose, onPostAdded }) => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("ingredients", JSON.stringify(ingredients));  // Send as a JSON string
+    formData.append("ingredients", JSON.stringify(ingredients));  
     formData.append("instructions", instructions);
     formData.append("hashtags", JSON.stringify(hashtags.split(" ").filter(tag => tag)));
     if (image) {
-      formData.append("image", image); // Only append if an image is selected
+      formData.append("image", image);
     }
 
     const apiUrl = `${apiBase}/post/addPost`;
@@ -30,15 +29,15 @@ const AddRecipe = ({ onClose, onPostAdded }) => {
     const response =fetch(apiUrl, {
       method: 'POST',
       credentials: 'include',
-      body: formData, // Send FormData instead of JSON
+      body: formData,
     })
       .then(response => response.json())
       .then(data => {
         if (data.message === "success") {
           onPostAdded(); 
-          onClose();  // Close modal if successful
+          onClose();  
         } else {
-          setError("Failed to submit recipe");  // Set an error if something goes wrong
+          setError("Failed to submit recipe");  
         }
       })
       .catch(error => {

@@ -86,7 +86,7 @@ const SearchWithMultiSelect = () => {
 
   const handleOptionClick = (option) => {
     dispatch(toggleOption(option));
-    dispatch(clearSearchTerm()); // Clear search term after selection
+    dispatch(clearSearchTerm()); 
   };
 
   const handleRemoveTag = (option) => {

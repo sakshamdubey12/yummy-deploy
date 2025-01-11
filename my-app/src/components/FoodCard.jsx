@@ -1,24 +1,25 @@
 import React from "react";
 import { FaDownload, FaTrash } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa"; // Import filled heart icon
+import { FaHeart } from "react-icons/fa"; 
 import { FiHeart } from "react-icons/fi";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
+
+const FoodCard = ({ post,loggedInUser ,onDelete, user }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const [isLiked, setIsLiked] = useState(post.isLiked)
+  const [isLiked, setIsLiked] = useState(null)
   const apiBase = process.env.REACT_APP_API_URL;
-  // const currentUserId = user._id;
-  const currentUserId = useSelector((state) => state.user.userId);
+  console.log(loggedInUser)
   useEffect(() => {
-    // Check if the post is liked by the current user when the component mounts
-    if (post.likes.includes(currentUserId)) {
+    if (post.likes.includes(loggedInUser)) {
       setIsLiked(true);
     }
-  }, [post.likes, currentUserId]);
+  }, [post.likes, loggedInUser]);
+
+// console.log(post,loggedInUser)
 
   const likeHandle = async () => {
     try {
@@ -27,15 +28,13 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
       }`;
       const response = await fetch(url, {
         method: "PUT",
-        credentials: "include", // For sending cookies
+        credentials: "include", 
       });
-      console.log(response)
+      // console.log(response)
       if (response.ok) {
         const updatedPost = await response.json();
-        // console.log(updatedPost);
-        post.likes = updatedPost.likes; // Update the likes in the UI
+        post.likes = updatedPost.likes;
 
-        // Toggle the like state
         setIsLiked(!isLiked);
       } else {
         console.error(
@@ -47,6 +46,7 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
     }
   };
 
+
   const handleClick = () => {
     setShowDropdown(!showDropdown);
   };
@@ -55,11 +55,11 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
     try {
       const response = await fetch(`${apiBase}/post/${post._id}`, {
         method: "DELETE",
-        credentials: "include", // For sending cookies
+        credentials: "include", 
       });
 
       if (response.ok) {
-        onDelete(post._id); // Call the onDelete prop to remove the post from the UI
+        onDelete(post._id); 
       } else {
         console.error("Failed to delete post");
       }
@@ -108,9 +108,9 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
               className={`p-2 rounded-full border-gray-200 border-2 bg-gray-200`}
             >
               {isLiked ? (
-                <FaHeart className="text-red-500" size={20} /> // Filled heart when liked
+                <FaHeart className="text-red-500" size={20} /> 
               ) : (
-                <FiHeart className="text-gray-700" size={20} /> // Outlined heart when not liked
+                <FiHeart className="text-gray-700" size={20} /> 
               )}
             </button>
             <button
@@ -127,14 +127,13 @@ const FoodCard = ({ post, loggedInUser ,onDelete, user }) => {
                   </li>
 
                   <li
-                    className={`flex items-center px-4 py-2 text-gray-700 cursor-pointer ${loggedInUser._id===user._id ? '' : 'hidden' }  hover:bg-purple-200`}
-                    onClick={handleDelete} // Call handleDelete when Delete is clicked
+                    className={`flex items-center px-4 py-2 text-gray-700 cursor-pointer ${loggedInUser===user._id ? '' : 'hidden' }  hover:bg-purple-200`}
+                    onClick={handleDelete}
                   >
                     <FaTrash className="mr-2" /> Delete
                   </li>
                   <li
-                    className={`flex items-center px-4 py-2 text-gray-700 cursor-pointer ${loggedInUser._id===user._id ? '' : 'hidden' } hover:bg-purple-200`}
-                     // Call handleDelete when Delete is clicked
+                    className={`flex items-center px-4 py-2 text-gray-700 cursor-pointer ${loggedInUser===user._id ? '' : 'hidden' } hover:bg-purple-200`}
                   >
                     <MdOutlineModeEditOutline className="mr-2" /> Edit
                   </li>
