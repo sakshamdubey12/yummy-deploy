@@ -50,7 +50,7 @@ recipe_details = get_recipe_details(predicted_recipe)
 
 # Output the recipe details as JSON
 if recipe_details:
-    print(json.dumps(recipe_details))  # Output the details in JSON format
+    print(json.dumps(recipe_details))  
 else:
     print(json.dumps({"error": "Recipe not found"}))
 

@@ -1,4 +1,3 @@
-// import React from 'react'
 import Chatbox from '../components/Chatbox'
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
@@ -7,7 +6,6 @@ import { useSelector } from 'react-redux';
 import msg from "../images/msg.gif"
 const apiBase = process.env.REACT_APP_API_URL;
 const socket = io(`${apiBase}`);
-// const socket = io('http://localhost:3001');
 
 export const Chat = () => {
     const apiBase = process.env.REACT_APP_API_URL;
@@ -41,7 +39,7 @@ export const Chat = () => {
     
     useEffect(() => {
       if (chatPartner) {
-        setMessages([]);  // Clear previous messages when a new chat starts
+        setMessages([]); 
         fetchMessages();
       }
     }, [chatPartner]);

@@ -3,14 +3,13 @@ import { useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 
-const RecipeCard = ({ post}) => {
-  // console.log(post)
+const RecipeCard = ({loggedInUserId, post}) => {
   const ingredients = JSON.parse(post.ingredients);
-  const currentUserId = useSelector((state) => state.user.userId);
+  const currentUserId = loggedInUserId
   const [isLiked, setIsLiked] = useState(post.isLiked);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [nutritionData, setNutritionData] = useState(null); // State to store nutrition data
-  const [loading, setLoading] = useState(false); // Loading state
+  const [nutritionData, setNutritionData] = useState(null);
+  const [loading, setLoading] = useState(false); 
   const apiBase = process.env.REACT_APP_API_URL;
   const formatPostDate = (createdAt) => {
     const postDate = new Date(createdAt);
@@ -22,6 +21,8 @@ const RecipeCard = ({ post}) => {
     const hoursDifference = Math.floor(minutesDifference / 60);
     const daysDifference = Math.floor(hoursDifference / 24);
 
+
+
     if (daysDifference >= 1) {
       return postDate.toLocaleDateString();
     } else if (hoursDifference >= 1) {
@@ -32,7 +33,7 @@ const RecipeCard = ({ post}) => {
       return `${secondsDifference} second${secondsDifference !== 1 ? "s" : ""} ago`;
     }
   };
-
+console.log(post, loggedInUserId)
   useEffect(() => {
     if (post.likes.includes(currentUserId)) {
       setIsLiked(true);
@@ -49,7 +50,7 @@ const RecipeCard = ({ post}) => {
 
       if (response.ok) {
         const updatedPost = await response.json();
-        post.likes = updatedPost.likes; // Update the likes in the UI
+        post.likes = updatedPost.likes; 
         setIsLiked(!isLiked);
       } else {
         console.error(isLiked ? "Failed to unlike post" : "Failed to like post");
@@ -60,10 +61,8 @@ const RecipeCard = ({ post}) => {
   };
 
   const handleViewRecipe = async () => {
-    setIsModalOpen(true); // Open the modal
-    setLoading(true); // Start loading when analyzing
-
-    // Call the Spoonacular API to get nutrition data
+    setIsModalOpen(true); 
+    setLoading(true);
     try {
       console.log(ingredients)
       const response = await fetch(
@@ -82,17 +81,17 @@ const RecipeCard = ({ post}) => {
 
       const data = await response.json();
       console.log(data)
-      setNutritionData(data); // Store the fetched nutrition data
+      setNutritionData(data);
     } catch (error) {
       console.error("Error fetching nutrition data:", error);
     }
 
-    setLoading(false); // Stop loading once data is fetched
+    setLoading(false); 
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
-    setNutritionData(null); // Clear nutrition data when modal is closed
+    setIsModalOpen(false); 
+    setNutritionData(null); 
   };
 
   return (

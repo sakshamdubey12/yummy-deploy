@@ -7,13 +7,13 @@ import Chatbox from "../components/Chatbox";
 
 const Generate = () => {
   const selectedOptions = useSelector((state) => state.search.selectedOptions);
-  const [predictedRecipe, setPredictedRecipe] = useState(null); // State to store the predicted recipe
-  const [loading, setLoading] = useState(false); // State for loader
+  const [predictedRecipe, setPredictedRecipe] = useState(null); 
+  const [loading, setLoading] = useState(false); 
   const apiBase = process.env.REACT_APP_API_URL;
   const handleGenerate = async () => {
     console.log("Selected Ingredients:", selectedOptions);
 
-    const apiUrl = `${apiBase}/AI/generate`; // Replace with your API URL
+    const apiUrl = `${apiBase}/AI/generate`;
 
     const data = {
       ingredients: selectedOptions,
@@ -35,12 +35,10 @@ const Generate = () => {
       const result = await response.json();
       console.log("API Response:", result.predictedRecipe);
 
-      // Update state with the predicted recipe
       setPredictedRecipe(result.predictedRecipe);
     } catch (error) {
       console.error("Error sending data to API:", error);
     } finally {
-      // Set loading to false after the API request is completed
       setLoading(false);
     }
   };
@@ -63,16 +61,15 @@ const Generate = () => {
                     : "relative h-[65%]"
                 }`}
               >
-                {/* <div className='relative h-[65%]'> */}
+              
                 <img
-                  src={pan} // Replace with the actual path to your image
+                  src={pan} 
                   alt="Pan with vegetables"
                   className={`${
                     predictedRecipe || loading
                       ? "w-full scale-50 relative -top-9"
                       : "w-full scale-75 relative -top-9"
                   }`}
-                  // className="w-full scale-50 relative -top-9"
                 />
                 <div
                   className={`${
@@ -96,10 +93,9 @@ const Generate = () => {
                 <button
                   className="bg-purple-700 absolute  text-white py-2 top-0 right-[15%] px-6 rounded-full"
                   onClick={handleGenerate}
-                  disabled={loading} // Disable button while loading
+                  disabled={loading} 
                 >
                   {loading ? "Generating..." : "Generate Now"}{" "}
-                  {/* Change text during loading */}
                 </button>
               </div>
               <p className="text-lg text-center text-purple-700 mt-4 mb-4">
@@ -108,11 +104,8 @@ const Generate = () => {
 
               {loading && (
                 <div className="relative -top-24">
-                  {/* <div className="text-xl text-gray-600">
-                  Loading...
-                </div> */}
+                 
                   <div className="loader mt-4"></div>{" "}
-                  {/* Optionally add a spinner */}
                   <img className="scale-50" src={chef} />
                 </div>
               )}
@@ -120,7 +113,6 @@ const Generate = () => {
               {/* Display the predicted recipe */}
               {predictedRecipe && !loading && (
                 <>
-                  {/* <h2 className="text-2xl font-bold mb-2">Predicted Recipe:</h2> */}
                   <div className="bg-purple-100 rounded-lg w-[60%] m-auto shadow-lg transform transition-transform hover:scale-105 duration-300">
                     <div className="bg-purple-700 p-6 flex justify-between items-center font-semibold text-white rounded-t-lg">
                       <div>
@@ -146,7 +138,6 @@ const Generate = () => {
                           </p>
                         </div>
                         <div className="mt-2 space-y-2">
-                          {/* Split instructions into an array and map them to display on new lines */}
                           {predictedRecipe.Instructions.split(/\d+/)
                             .slice(1)
                             .map((instruction, index) => (
@@ -170,46 +161,7 @@ const Generate = () => {
       {/* Right Sidebar */}
       <div className="w-1/3 bg-white p-5 border-l h-full">
         <Chatbox />
-        {/* <h3 className="text-gray-700 font-semibold mb-4">Top Places</h3>
-        <ul className="space-y-3">
-          <li className="text-gray-600">Bangkok, Thailand</li>
-          <li className="text-gray-600">Marrakesh, Morocco</li>
-          <li className="text-gray-600">Copenhagen, Denmark</li>
-        </ul>
-
-        <div className="mt-10">
-          <h3 className="text-gray-700 font-semibold mb-4">Sponsor</h3>
-          <div className="bg-gray-200 p-4 rounded-lg">
-            <h4 className="text-gray-800 font-semibold">InVision Studio</h4>
-            <p className="text-gray-600 mt-1">
-              The world's most powerful screen design tool.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-10">
-          <h3 className="text-gray-700 font-semibold mb-4">Suggestions</h3>
-          <ul className="space-y-3">
-            <li className="flex justify-between text-gray-600">
-              <span>Matthew Kane</span>
-              <button className="text-purple-700 hover:text-purple-800">
-                Add
-              </button>
-            </li>
-            <li className="flex justify-between text-gray-600">
-              <span>Sarah Lee</span>
-              <button className="text-purple-700 hover:text-purple-800">
-                Add
-              </button>
-            </li>
-            <li className="flex justify-between text-gray-600">
-              <span>James Cook</span>
-              <button className="text-purple-700 hover:text-purple-800">
-                Add
-              </button>
-            </li>
-          </ul>
-        </div> */}
+        
       </div>
     </div>
   );

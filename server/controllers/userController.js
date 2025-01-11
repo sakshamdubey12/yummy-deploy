@@ -55,7 +55,6 @@ exports.toggleFollow = async (req, res) => {
 exports.getUserProfile = async (req, res) => {
   try {
     const id = req.user.id;
-    // console.log('user',id);
     const user = await userModel.findOne({ _id: id }).populate('posts');
 
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -84,7 +83,6 @@ exports.getUserProfile = async (req, res) => {
 
 exports.publicProfile = async(req, res)=>{
   const id = req.params.id;
-  // console.log(id,'hhhhhhhhhhhhhhh')
 
   const user = await userModel.findOne({_id:id}).populate('posts');
 
@@ -94,8 +92,7 @@ exports.publicProfile = async(req, res)=>{
       ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`
       : null
   }));
-  // console.log(user);
-  // res.json(user)
+  
   res.status(200).json({
     _id: user._id,
     name: user.name,
@@ -109,26 +106,23 @@ exports.publicProfile = async(req, res)=>{
 
 exports.find =async(req, res)=>{
   const id = req.user.id;
-  // console.log(id,'hhhhhhhhhhhhhhh')
 
   const user = await userModel.findOne({_id:id}).populate('following');
-  // console.log(user.following);
   res.status(200).json(user.following);
 }
 
 exports.follwedUsers = async (req, res) => {
-  const currentUserId = req.query.user; // Get user ID from query parameter
+  const currentUserId = req.query.user; 
   const userId = req.user.id;
   try {
     // Find the user by ID
     const user = await userModel.findById(currentUserId);
-    // console.log(user,'followed')
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
     // Fetch the users that the current user is following
-    const followedUsers = await userModel.find({ _id: { $in: user.following } }); // Assuming 'following' is an array of user IDs
+    const followedUsers = await userModel.find({ _id: { $in: user.following } }); 
 
     // Send back the list of followed users
     res.status(200).json({followedUsers, id:userId});

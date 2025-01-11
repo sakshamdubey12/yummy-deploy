@@ -5,15 +5,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // userName: {
-  //   type: String,
-  //   required: true,
-  // },
+ 
   email: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true, // Store emails in lowercase
+    lowercase: true, 
   },
   password: {
     type: String,
@@ -21,21 +18,21 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: null, // Optional avatar, can be null
+    default: null, 
   },
   posts: {
-    type: [mongoose.Schema.Types.ObjectId], // Assuming posts will reference another model
-    ref: 'Post', // Reference to the Post model
+    type: [mongoose.Schema.Types.ObjectId], 
+    ref: 'Post', 
     default: [],
   },
   followers: {
-    type: [mongoose.Schema.Types.ObjectId], // Followers referenced by ObjectId
-    ref: 'User', // Reference to the User model
+    type: [mongoose.Schema.Types.ObjectId], 
+    ref: 'User', 
     default: [],
   },
   following: {
-    type: [mongoose.Schema.Types.ObjectId], // Following users referenced by ObjectId
-    ref: 'User', // Reference to the User model
+    type: [mongoose.Schema.Types.ObjectId], 
+    ref: 'User', 
     default: [],
   },
 }, {

@@ -1,41 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import FoodCard from "./FoodCard"; // Assume this component is used for rendering posts
+import FoodCard from "./FoodCard"; 
 
-const UserProfile = () => {
-  const { id } = useParams(); // Extract the user ID from the URL
-  const [isFollowing, setIsFollowing] = useState(false); // To track the follow status
-  const [posts, setPosts] = useState([]); // Posts of the user
-  const [user, setUser] = useState(null); // Profile user data
-  const [loading, setLoading] = useState(true); // Loading state
-  const [loggedInUser, setLoggedInUser] = useState(null); // Current logged-in user
+const UserProfile = ({loggedInUserId}) => {
+  
+  const { id } = useParams(); 
+  const [isFollowing, setIsFollowing] = useState('');
+  const [posts, setPosts] = useState([]); 
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); 
+  const [loggedInUser, setLoggedInUser] = useState(null); 
   const apiBase = process.env.REACT_APP_API_URL;
-  // Fetch profile user details and follow status
-  useEffect(() => {
-    
+console.log('user profile; ',user)
+  useEffect(() => { 
     const fetchUserDetails = async () => {
       try {
-        // Fetch the profile user details
         const response = await fetch(`${apiBase}/users/public/${id}`, {
           method: 'GET',
           credentials: 'include',
         });
-        
         if (response.ok) {
           const data = await response.json();
           setUser(data);
-          // console.log('s',user)
-          // Check if logged-in user is following the profile user
-          const loggedInResponse = await fetch(`${apiBase}/users/user`, {
-            method: "GET",
-            credentials: "include",
-          });
-          const loggedInData = await loggedInResponse.json();
-          setLoggedInUser(loggedInData);
-          console.log(loggedInUser,id)
-          // Check if the logged-in user is following the profile user
-          if (data.followers.includes(loggedInUser._id)) {
+          if (data.followers.includes(loggedInUserId)) {
             setIsFollowing(true);
+          }
+          else{
+            setIsFollowing(false);
+
           }
         } else {
           console.error('Failed to fetch user details');
@@ -48,12 +40,55 @@ const UserProfile = () => {
     };
 
     fetchUserDetails();
-  }, [id]);
+  }, [id, isFollowing,loggedInUserId]);
+  
+  // useEffect(() => {
+  //   const fetchUserDetails = () => {
+  //     fetch(`${apiBase}/users/public/${id}`, {
+  //       method: "GET",
+  //       credentials: "include",
+  //     })
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           throw new Error("Failed to fetch user details");
+  //         }
+  //         return response.json();
+  //       })
+  //       .then((data) => {
+  //         setUser(data);
+  
+  //         return fetch(`${apiBase}/users/user`, {
+  //           method: "GET",
+  //           credentials: "include",
+  //         });
+  //       })
+  //       .then((loggedInResponse) => {
+  //         if (!loggedInResponse.ok) {
+  //           throw new Error("Failed to fetch logged-in user details");
+  //         }
+  //         return loggedInResponse.json();
+  //       })
+  //       .then((loggedInData) => {
+  //         setLoggedInUser(loggedInData)
+  
+  //         if (user && user.following.includes(loggedInUserId)) {
+  //           setIsFollowing(true);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Erhhgror fetching user details:", error);
+  //       })
+  //       .finally(() => {
+  //         setLoading(false);
+  //       });
+  //   };
+  
+  //   fetchUserDetails();
+  // }, [id, isFollowing]);
+  
 
-  // Handle follow/unfollow logic
   const handleFollow = async () => {
     try {
-      // console.log('j')
       const response = await fetch(
         `${apiBase}/users/${id}/follow`,
         {
@@ -64,10 +99,9 @@ const UserProfile = () => {
           },
         }
       );
-      console.log(response)
       if (response.ok) {
         const updatedUser = await response.json();
-        setIsFollowing(!isFollowing); // Toggle follow state
+        setIsFollowing(!isFollowing);
       } else {
         console.error("Failed to follow/unfollow user");
       }
@@ -136,10 +170,9 @@ const UserProfile = () => {
         {user.posts?.length  === 0 ? (
           <p>No posts available</p>
         ) : (
-          //  <div>hello</div>
           <div className="grid grid-cols-5 gap-8">
             {user.posts?.map((post) => (
-              <FoodCard key={post._id} post={post} loggedInUser={loggedInUser} user={user} onDelete={handleDel} />
+              <FoodCard key={post._id} post={post} loggedInUser={loggedInUserId} user={user} onDelete={handleDel} />
             ))}
           </div>
         )}

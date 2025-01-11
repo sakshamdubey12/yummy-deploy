@@ -4,7 +4,6 @@ import { login, logout } from "../redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 
-// Import avatars
 import avatar1 from "../images/avatars/avatar1.png";
 import avatar2 from "../images/avatars/avatar2.png";
 import avatar3 from "../images/avatars/avatar3.png";
@@ -13,7 +12,6 @@ import avatar4 from "../images/avatars/avatar4.png";
 const Signup = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
-  // console.log("log", isLoggedIn)
   const apiBase = process.env.REACT_APP_API_URL;
   const [formData, setFormData] = useState({
     name: '',
@@ -26,9 +24,7 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-    // List of available avatars
     const avatars = [avatar1, avatar2, avatar3,avatar4];
-  // Handle input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -36,19 +32,16 @@ const Signup = () => {
     });
   };
 
-    // Handle avatar selection
     const handleAvatarSelect = (avatar) => {
       setFormData({
         ...formData,
-        avatar  // Set the selected avatar
+        avatar 
       });
     };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     const newErrors = {};
     if (!formData.name) newErrors.username = 'name is required';
     if (!formData.username) newErrors.username = 'Username is required';
@@ -68,11 +61,9 @@ const Signup = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        // If login is successful, redirect to the home page
         dispatch(login({ isLoggedIn: true }));
         navigate('/login');
       }else {
-        // If login fails, display error message
         setErrors(data.message);
       }
     } else {
@@ -86,7 +77,6 @@ const Signup = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
         
         <form onSubmit={handleSubmit}>
-          {/* name  */}
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">
               Name
@@ -103,7 +93,6 @@ const Signup = () => {
             />
             {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
           </div>
-          {/* Username Input */}
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-700 font-semibold mb-2">
               Username
@@ -121,7 +110,6 @@ const Signup = () => {
             {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
           </div>
 
-          {/* Email Input */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
               Email
@@ -139,7 +127,6 @@ const Signup = () => {
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          {/* Password Input */}
           <div className="mb-6">
             <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
               Password
@@ -157,7 +144,6 @@ const Signup = () => {
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
           </div>
 
-             {/* Avatar Selection */}
              <div className="mb-6">
             <label className="block text-gray-700 font-semibold mb-2">Choose an Avatar</label>
             <div className="flex justify-between">
@@ -176,7 +162,6 @@ const Signup = () => {
             {errors.avatar && <p className="text-red-500 text-sm mt-1">{errors.avatar}</p>}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-purple-700 text-white py-2 rounded-lg hover:bg-purple-800 transition duration-300"
@@ -185,7 +170,6 @@ const Signup = () => {
           </button>
         </form>
 
-        {/* Login Link */}
         <p className="text-center text-gray-600 mt-4">
           Already have an account?{' '}
           <a href="/login" className="text-purple-700 hover:underline">

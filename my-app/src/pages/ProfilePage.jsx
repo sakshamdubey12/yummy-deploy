@@ -8,8 +8,8 @@ const ProfilePage = () => {
   const [user, setUser] = useState('')
   const apiBase = process.env.REACT_APP_API_URL;
 
+console.log('profile page; ',user)
 
-  // Function to fetch all posts
   const fetchPosts = async () => {
     try {
       const response = await fetch(`${apiBase}/post/posts`, {
@@ -17,7 +17,7 @@ const ProfilePage = () => {
         credentials: "include",
       });
       const data = await response.json();
-      setPosts(data);  // Update posts in state
+      setPosts(data);  
       console.log('posts',posts)
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -31,29 +31,26 @@ const ProfilePage = () => {
         credentials: "include",
       });
       const data = await response.json();
-      setUser(data); // Store user data in state
+      setUser(data); 
       
     } catch (error) {
       console.error("Error fetching user:", error);
     }
   };
 
-  // Fetch posts when the component is mounted
   useEffect(() => {
     fetchPosts();
     fetchUser();
-    // console.log('logged in user: ', user)
   }, []);
 
   const handleDeletePost = (postId) => {
-    // Remove the post from the posts array
     const updatedPosts = posts.filter((post) => post._id !== postId);
-    setPosts(updatedPosts); // Update the state to trigger UI re-render
+    setPosts(updatedPosts); 
   };
 
   const handlePostAdded = (newPost) => {
-    setIsAddRecipeOpen(false);  // Close the modal
-    fetchPosts(); // Fetch the latest posts after adding a new one
+    setIsAddRecipeOpen(false);  
+    fetchPosts(); 
   };
   
   const handleUpdate = (updatedPost) => {
@@ -67,7 +64,6 @@ const ProfilePage = () => {
   return (
     <div>
       <div>
-        {/* Profile Section */}
         <div className="bg-purple-100 p-6 rounded-lg shadow-md mb-6">
           <div className="flex justify-between">
             <div className="flex flex-col">
@@ -129,23 +125,17 @@ const ProfilePage = () => {
           ) : (
             <div className="grid grid-cols-5 gap-8 h-[50%]">
               {posts?.map((post) => (
-                <FoodCard key={post._id} post={post} loggedInUser={user} user={user} onDelete={handleDeletePost} onUpdate={handleUpdate} />
+                <FoodCard key={post._id} post={post} loggedInUser={user._id} user={user} onDelete={handleDeletePost} onUpdate={handleUpdate} />
               ))}
             </div>
           )}
         </div>
       </div>
-      {/* Add Recipe Modal */}
       {isAddRecipeOpen && <AddRecipe onPostAdded={handlePostAdded} onClose={() => setIsAddRecipeOpen(false)} />}
     </div>
   );
 };
 
-// const ProfilePage = ()=>{
-//   return 
-//   <div>
-//     Profile
-//   </div>
-// }
+
 
 export default ProfilePage;

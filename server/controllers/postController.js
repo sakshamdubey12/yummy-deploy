@@ -7,7 +7,6 @@ exports.addPost = async (req, res) => {
   try {
     const user = await userModel.findOne({ _id: req.user.id });
     if (!user) return res.status(404).json({ message: 'User not found' });
-    // console.log(user)
     const post = await postModel.create({
       title,
       description,
@@ -118,7 +117,6 @@ exports.unlikePost = async (req, res) => {
   const userId = req.user.id;
   try {
     const post = await postModel.findById(postId);  
-    // console.log(userId)
     if (!post) return res.status(404).json({ message: 'Post not found' });
 
     if (!post.likes.includes(userId)) return res.status(400).json({ message: 'You have not liked this post' });
@@ -139,7 +137,6 @@ exports.followedPost = async (req, res) => {
     const userId = req.user.id;
     // Find the logged-in user
     const user = await userModel.findById(userId).populate('posts')
-    // console.log('hh',user)
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -148,23 +145,22 @@ exports.followedPost = async (req, res) => {
     const followedUsers = user.following;
 
     if (!followedUsers || followedUsers.length === 0) {
-      return res.json([]); // Return an empty array if no users are followed
+      return res.json([]); 
     }
 
     // Fetch posts from the followed users
     const posts = await postModel.find({ user: { $in: followedUsers } })
-      .sort({ createdAt: -1 }) // Sort by newest posts
-      .populate('user') // Populate the author's username
+      .sort({ createdAt: -1 }) 
+      .populate('user')
       .exec();
 
       const postsWithBase64Images = posts.map(post => ({
-        ...post._doc, // Copy the rest of the post fields
+        ...post._doc, 
         image: post.image.data 
           ? `data:${post.image.contentType};base64,${post.image.data.toString('base64')}`
-          : null,  // Check if image exists
+          : null,  
       }));
 
-    // console.log(postsWithBase64Images)
     return res.json(postsWithBase64Images);
   } catch (error) {
     console.error('Error fetching posts from followed users:', error);
